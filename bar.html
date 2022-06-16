@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+</head>
+<body>
+    <script>
+         data =    [
+                {
+                    "name": "earring hooks",
+                    "value": 54
+                },
+                {
+                    "name": "earring converters",
+                    "value": 170
+                },
+                {
+                    "name": "earring stick",
+                    "value": 110
+                },
+                {
+                    "name": "glass earring retainer",
+                    "value": 90
+                },
+                {
+                    "name": "earring pairs",
+                    "value": 20
+                },
+                {
+                    "name": "jewellery making earring hooks",
+                    "value": 5
+                },
+                {
+                    "name": "earring add ons",
+                    "value": 18
+                },
+                {
+                    "name": "earring attachments",
+                    "value": 19
+                },
+                {
+                    "name": "earring connectors",
+                    "value": 1
+                },
+                {
+                    "name": "earring dish",
+                    "value": 12
+                },
+                {
+                    "name": "earring ladder",
+                    "value": 11
+                },
+                {
+                    "name": "earring making pliers",
+                    "value": 10
+                },
+                {
+                    "name": "earring outlet",
+                    "value": 17
+                },
+                {
+                    "name": "earring pliers",
+                    "value": 10
+                },
+                {
+                    "name": "earring retainers",
+                    "value": 10
+                },
+                {
+                    "name": "earring bracelet set",
+                    "value": 50
+                }
+              ]
+
+ // set the dimensions and margins of the graph
+var margin = {top: 20,
+             right: 20,
+              bottom: 30,
+               left: 40},
+    width = 900 - margin.left - margin.right,
+    height = 700 - margin.top - margin.bottom
+
+
+
+ var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .style("background","pink")
+  .append("g")
+    .attr("transform", 
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Scale the range of the data in the domains
+xScale = d3.scaleBand().domain(data.map(function(d) {return d.name })).range([0, width])
+yScale = d3.scaleLinear().domain([0, d3.max(data, function(d) {return d.value})]).range([height, 0])
+
+
+ // add the x Axis
+ svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(xScale))
+    .selectAll("text")  
+    .style("text-anchor", "end")
+    .attr("dx", "-.9em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-20)");
+
+
+  // add the y Axis
+  svg
+  .append("g")
+     .call(d3.axisLeft(yScale))
+
+     
+// append the rectangles for the bar chart
+svg.selectAll("rect")
+      .data(data)
+      .enter().append("rect")
+      .attr("width",50)
+      .attr("x", function(d) { return xScale(d.name); })
+    .attr("y", function(d) { return yScale(d.value); })
+      .attr("height", function(d) { return height - yScale(d.value); })
+      .attr("fill","blue")
+     </script>
+</body>
+</html>
